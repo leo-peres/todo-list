@@ -1,0 +1,1 @@
+document.querySelector("body").innerHTML = "<h1>Todo list</h1>";
