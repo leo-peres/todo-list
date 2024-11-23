@@ -49,4 +49,13 @@ body {
     width: 260px;
     height: 195px;
     box-shadow: 0px 0px 6px 2px var(--black);
+
+    display: grid;
+    grid-template-rows: 10% 10% 1fr;
+    gap: 8px;
+}
+
+.todo-card-title {
+    text-align: center;
+    font-weight: bold;
 }
