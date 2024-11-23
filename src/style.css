@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+
+    font-family: roboto;
+
+    --white: #fafafa;
+
+    --menu-bg-color: #60a5fa;
+
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: 16.25vw 1fr;
+}
+
+.menu {
+    background-color: var(--menu-bg-color);
+}
+
+.content {
+    background-color: var(--white);
+}
