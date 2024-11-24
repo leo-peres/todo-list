@@ -1,4 +1,4 @@
 import "./style.css";
-import mainPage from "./main_page.js";
+import home from "./home.js";
 
-mainPage();
+home();

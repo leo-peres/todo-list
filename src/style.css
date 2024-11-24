@@ -40,7 +40,35 @@ body {
     font-size: 2.5em;
 }
 
+/****************/
+/***** MENU *****/
+/****************/
+
+.menu {
+    padding-left: 36px;
+}
+
+.menu-section {
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.menu-section ul {
+    padding: 0;
+    list-style: none;
+
+    display:grid;
+    gap: 6px;
+}
+
+.menu nav {
+    cursor: pointer;
+}
+
+/*********************/
 /***** TODO CARD *****/
+/*********************/
 
 .todo-card-parent-div {
     color: var(--main-text-color);
