@@ -1,13 +1,28 @@
 import Todo from "./todo.js";
 import TodoCard from "./todo_card.js";
 
-export default () => {
+export default (todoStorage) => {
+
 
     const contentDiv = document.getElementById("content");
 
-    const testTodo = new Todo("Test TODO card", new Date(2024, 10, 25), "This is a test TODO card", 0);
-    const testTodoCard = new TodoCard(testTodo);
+    const todos = [];
 
-    contentDiv.append(testTodoCard.parentDiv);
+    const update = () => {
+        contentDiv.innerHTML = "";
+        todos.length = 0;
+        for(const todo of todoStorage.load()) {
+            todos.push(todo);
+            contentDiv.append(new TodoCard(todo, () => {todoStorage.remove(todo);}).parentDiv);
+        }
+    }
+
+    update();
+
+    return {
+
+        update
+
+    };
 
 }

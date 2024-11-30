@@ -11,9 +11,9 @@
 
     --main-text-color: var(--black);
 
-    --menu-bg-color: #60a5fa;
+    --menu-bg-color: #bfdbfe;
 
-    --card-bg-color: #768BA5;
+    --card-bg-color: #e2e8f0;
 
 }
 
@@ -40,6 +40,20 @@ body {
     font-size: 2.5em;
 }
 
+button,
+nav {
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+.dots-btn {
+    background: url(./images/dots-vertical.svg);
+    background-repeat: no-repeat;
+}
+
 /****************/
 /***** MENU *****/
 /****************/
@@ -48,10 +62,13 @@ body {
     padding-left: 36px;
 }
 
-.menu-section {
-    color: var(--white);
+.menu {
+    color: var(--main-text-color);
     font-size: 1.2rem;
     font-weight: bold;
+    padding-top: 64px;
+    padding-left: 36px;
+    padding-bottom: 64px;
 }
 
 .menu-section ul {
@@ -62,10 +79,6 @@ body {
     gap: 6px;
 }
 
-.menu nav {
-    cursor: pointer;
-}
-
 /*********************/
 /***** TODO CARD *****/
 /*********************/
@@ -74,16 +87,79 @@ body {
     color: var(--main-text-color);
     background-color: var(--card-bg-color);
     padding: 8px;
+    padding-right: 0px;
     width: 260px;
     height: 195px;
     box-shadow: 0px 0px 6px 2px var(--black);
+    position: relative;
 
     display: grid;
-    grid-template-rows: 10% 10% 1fr;
-    gap: 8px;
+    grid-template-rows: 0.1fr 0.1fr 0.8fr;
+    grid-template-columns: 1fr 24px;
+}
+
+.todo-card-field {
+    margin-bottom: 8px;
 }
 
 .todo-card-title {
     text-align: center;
     font-weight: bold;
 }
+
+.todo-card-due-date {
+    grid-row: 2;
+    grid-column: 1 / -2;
+}
+
+.todo-card-text {
+    grid-row: 3;
+    grid-column: 1 / -2;
+}
+
+.todo-card-parent-div .dots-btn {
+    padding: 0;
+    border: 0;
+    width: 24px;
+    height: 24px;
+
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.todo-card-options-div {
+    background-color: #f1f5f9;
+    opacity: 95%;
+    font-size: 1.1rem;
+    padding: 8px 0px;
+    position: absolute;
+    top: 30px;
+    right: 8px;
+}
+
+.todo-card-options-div ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display:grid;
+    grid-auto-columns: 120px;
+}
+
+.todo-card-options-div li {
+    margin-bottom: 4px;
+}
+
+.todo-card-option-btn {
+    background-color: inherit;
+    font-size: inherit;
+    text-align: left;
+    padding: 1px 8px;
+    border: 0;
+    width: 100%;
+}
+
+.todo-card-option-btn:hover {
+    background-color: var(--menu-bg-color);
+}
+
