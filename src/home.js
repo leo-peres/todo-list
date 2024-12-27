@@ -3,7 +3,6 @@ import TodoCard from "./todo_card.js";
 
 export default (todoStorage) => {
 
-
     const contentDiv = document.getElementById("content");
 
     const todos = [];
@@ -13,7 +12,7 @@ export default (todoStorage) => {
         todos.length = 0;
         for(const todo of todoStorage.load()) {
             todos.push(todo);
-            contentDiv.append(new TodoCard(todo, () => {todoStorage.remove(todo);}).parentDiv);
+            contentDiv.append(new TodoCard(todo, () => {todoStorage.remove(todo);}, todoStorage).parentDiv);
         }
     }
 

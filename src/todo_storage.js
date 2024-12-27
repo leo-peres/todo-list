@@ -2,6 +2,8 @@ export default () => {
 
     const pages = [];
 
+    const todos = JSON.parse(localStorage.getItem("todos")) || [];
+
     const add = (newTodo) => {
         todos.push(newTodo);
         save();
@@ -9,8 +11,15 @@ export default () => {
 
     const remove = (oldTodo) => {
         let index = todos.findIndex(todo => todo === oldTodo);
-        if(index)
+        if(index >= 0)
             todos.splice(index, 1);
+        save();
+    }
+
+    const updateTodo = (todo) => {
+        let index = todos.findIndex(_todo => _todo ===  todo);
+        if(index >= 0)
+            todos[index].title = todo.title;
         save();
     }
 
@@ -21,19 +30,19 @@ export default () => {
     }
 
     const load = () => {
-        return JSON.parse(localStorage.getItem("todos")) || [];
+        return todos;
     }
 
     const addPage = (newPage) => {
         pages.push(newPage);
     }
 
-    const todos = load();
-
     return {
 
         add,
         remove,
+        updateTodo,
+        save,
         load,
         addPage
 

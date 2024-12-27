@@ -7,4 +7,8 @@ export default class {
         this.priority = priority;
     }
 
+    setTitle(newTitle) {
+        this.title = newTitle;
+    }
+
 }

@@ -2,17 +2,19 @@ import {format} from "date-fns";
 
 export default class {
     
-    constructor(todo, deleteTodoFunction) {
+    constructor(todo, deleteTodoFunction, todoStorage) {
     
-        this.todo = todo
+        this.todo = todo;
     
+        this.todoStorage = todoStorage;
+
         this.parentDiv = document.createElement("div");
         this.parentDiv.classList.add("todo-card-parent-div");
 
-        const titleContainer = document.createElement("div");
-        titleContainer.classList.add("todo-card-field");
-        titleContainer.classList.add("todo-card-title");
-        titleContainer.innerText = todo.title;
+        this.titleContainer = document.createElement("div");
+        this.titleContainer.classList.add("todo-card-field");
+        this.titleContainer.classList.add("todo-card-title");
+        this.titleContainer.innerText = todo.title;
 
         const dateContainer = document.createElement("div");
         dateContainer.classList.add("todo-card-field");
@@ -34,7 +36,7 @@ export default class {
         const optionsList = document.createElement("ul");
 
         const options = [
-            {name: "Rename", onclickFunction: () => {console.log("rename");}},
+            {name: "Rename", onclickFunction: () => {this.enterRenameTitleMode()}},
             {name: "Delete", onclickFunction: deleteTodoFunction}
         ];
 
@@ -50,21 +52,70 @@ export default class {
 
         let optionsDivOpen = false;
 
-        dotsBtn.addEventListener("click", () => {
+        const toggleOptionsShow = () => {
             if(optionsDivOpen)
                 this.parentDiv.removeChild(optionsDiv);
             else    
                 this.parentDiv.append(optionsDiv);
             optionsDivOpen = !optionsDivOpen;
-        });
+        }
+
+        dotsBtn.addEventListener("click", toggleOptionsShow);
+        optionsDiv.addEventListener("click", toggleOptionsShow)
 
         optionsDiv.append(optionsList);
 
-        this.parentDiv.append(titleContainer);
+        this.parentDiv.append(this.titleContainer);
         this.parentDiv.append(dateContainer);
         this.parentDiv.append(textContainer);
         this.parentDiv.append(dotsBtn);
 
+        this.titleTextInputDiv = document.createElement("div");
+        this.titleTextInputDiv.classList.add("todo-card-title-text-input-div");
+
+        this.titleTextInput = document.createElement("input");
+        this.titleTextInput.classList.add("todo-card-title-text-input");
+
+        this.titleOKBtn = document.createElement("button");
+        this.titleOKBtn.innerText = "OK";
+
+        this.titleTextInputDiv.append(this.titleTextInput);
+        this.titleTextInputDiv.append(this.titleOKBtn);
+
+        this.titleTextInput.addEventListener("input", () => {
+            if(this.titleTextInput.value.length > 25)
+                this.titleTextInput.value = this.titleTextInput.value.slice(0, -1);
+        });
+
+        this.titleOKBtn.addEventListener("click", () => {this.toggleRenameTitleMode()});
+
+        document.addEventListener("keypress", (evt) => {
+            if(evt.key === "Enter" && document.activeElement === this.titleTextInput)
+                this.toggleRenameTitleMode();
+        });
+
+    }
+
+    toggleRenameTitleMode() {
+        if(this.titleContainer.hasAttribute("rename")) {
+            if(this.titleTextInput.value) {
+                this.todo.title = this.titleTextInput.value;
+                this.todoStorage.updateTodo(this.todo);
+            }
+            this.titleContainer.removeAttribute("rename");
+            this.titleContainer.innerHTML = this.todo.title;
+        }
+        else
+            this.enterRenameTitleMode();
+    }
+
+    enterRenameTitleMode() {
+        if(!this.titleContainer.hasAttribute("rename")) {
+            this.titleContainer.setAttribute("rename", "");
+            this.titleContainer.innerHTML = "";
+            this.titleContainer.append(this.titleTextInputDiv);
+            this.titleTextInput.value = this.todo.title;
+        }
     }
 
 }

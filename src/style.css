@@ -105,6 +105,7 @@ button:focus {
 .todo-card-title {
     text-align: center;
     font-weight: bold;
+    margin-bottom: 16px;
 }
 
 .todo-card-due-date {
@@ -163,3 +164,27 @@ button:focus {
     background-color: var(--menu-bg-color);
 }
 
+.todo-card-title-text-input-div {
+    background-color: #fafafa;
+    font-weight: bold;
+    padding: 3px;
+    border-radius: 5px;
+
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+.todo-card-title-text-input {
+    background-color: inherit;
+    font-weight: inherit;
+    padding-left: 8px;
+    border: 0;
+}
+
+.todo-card-title-text-input-div button {
+    font-size: 0.7rem;
+    font-weight: inherit;
+    background-color: inherit;
+    text-align: end;
+    border: 0;
+}
