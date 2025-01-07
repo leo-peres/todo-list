@@ -11,21 +11,54 @@ export default class {
         this.parentDiv = document.createElement("div");
         this.parentDiv.classList.add("todo-card-parent-div");
 
-        this.titleContainer = document.createElement("div");
-        this.titleContainer.classList.add("todo-card-field");
-        this.titleContainer.classList.add("todo-card-title");
-        this.titleContainer.innerText = todo.title;
+        //////////////////
 
-        const dateContainer = document.createElement("div");
-        dateContainer.classList.add("todo-card-field");
-        dateContainer.classList.add("todo-card-due-date");
-        dateContainer.innerText = `Due date: ${format(todo.dueDate, "dd/MM/yyyy")}`;
+        this.titleField = this.#createCardField("todo-card-title", this.todo.title, () => {this.#toggleEditTitleMode();});
 
-        const textContainer = document.createElement("div");
-        textContainer.classList.add("todo-card-field");
-        textContainer.classList.add("todo-card-text");
+        //this.titleField.editDiv.classList.add("todo-card-title-txt-input-div");
+        //this.titleField.input.classList.add("todo-card-title-txt-input");
 
-        textContainer.innerText = todo.text;
+        this.titleField.input.addEventListener("input", () => {
+            if(this.titleField.input.value.length > 25)
+                this.titleField.input.value = this.titleField.input.value.slice(0, -1);
+        });
+
+        this.titleField.okBtn.addEventListener("click", () => {this.#toggleEditTitleMode()});
+
+        document.addEventListener("keypress", (evt) => {
+            if(evt.key === "Enter" && document.activeElement === this.titleField.input)
+                this.#toggleEditTitleMode();
+        });
+
+        //////////////////
+
+        this.dueDateField = this.#createCardField("todo-card-due-date", `Due date: ${format(todo.dueDate, "dd/MM/yyyy")}`, () => {this.#enterEditDueDateMode();});
+
+        //this.dueDateField.editDiv.classList.add("todo-card-due-date-edit-div");
+
+        this.dueDateField.input.setAttribute("type", "date");
+
+        this.dueDateField.okBtn.addEventListener("click", () => {this.#toggleEditDueDateMode()});
+
+        document.addEventListener("keypress", (evt) => {
+            if(evt.key === "Enter" && document.activeElement === this.dueDateField.input)
+                this.#toggleEditDueDateMode();
+        });
+
+        //////////////////
+
+        this.txtField = this.#createCardField("todo-card-txt", this.todo.text, () => {this.#toggleEditTxtMode()}, true);
+
+        //this.txtField.input.classList.add("todo-card-txt-input");
+
+        this.txtField.okBtn.addEventListener("click", () => {this.#toggleEditTxtMode();});
+
+        document.addEventListener("keypress", (evt) => {
+            if(evt.key === "Enter" && document.activeElement === this.txtField.input)
+                this.#toggleEditTxtMode();
+        });
+
+        //////////////////
 
         const dotsBtn = document.createElement("button");
         dotsBtn.classList.add("dots-btn");
@@ -65,56 +98,113 @@ export default class {
 
         optionsDiv.append(optionsList);
 
-        this.parentDiv.append(this.titleContainer);
-        this.parentDiv.append(dateContainer);
-        this.parentDiv.append(textContainer);
+        this.parentDiv.append(this.titleField.wrapper);
+        this.parentDiv.append(this.dueDateField.wrapper);
+        this.parentDiv.append(this.txtField.wrapper);
         this.parentDiv.append(dotsBtn);
 
-        this.titleTextInputDiv = document.createElement("div");
-        this.titleTextInputDiv.classList.add("todo-card-title-text-input-div");
+    }
 
-        this.titleTextInput = document.createElement("input");
-        this.titleTextInput.classList.add("todo-card-title-text-input");
+    #createCardField(fieldClass, fieldTxt, editOnClick, textArea=false) {
 
-        this.titleOKBtn = document.createElement("button");
-        this.titleOKBtn.innerText = "OK";
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("todo-card-field");
+        wrapper.classList.add(fieldClass);
 
-        this.titleTextInputDiv.append(this.titleTextInput);
-        this.titleTextInputDiv.append(this.titleOKBtn);
+        const txtDiv = document.createElement("div");
+        txtDiv.innerText = fieldTxt;
 
-        this.titleTextInput.addEventListener("input", () => {
-            if(this.titleTextInput.value.length > 25)
-                this.titleTextInput.value = this.titleTextInput.value.slice(0, -1);
-        });
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("todo-card-edit-btn");
+        editBtn.onclick = () => {editOnClick();};
 
-        this.titleOKBtn.addEventListener("click", () => {this.toggleRenameTitleMode()});
+        wrapper.append(txtDiv);
 
-        document.addEventListener("keypress", (evt) => {
-            if(evt.key === "Enter" && document.activeElement === this.titleTextInput)
-                this.toggleRenameTitleMode();
-        });
+        wrapper.onmouseenter = () => {if(!wrapper.hasAttribute("edit")) wrapper.append(editBtn);};
+        wrapper.onmouseleave = () => {if(!wrapper.hasAttribute("edit")) wrapper.removeChild(editBtn);};
+
+        const editDiv = document.createElement("div");
+        editDiv.classList.add("todo-card-edit-div");
+        const input = textArea ? document.createElement("textarea") : document.createElement("input");
+        input.classList.add("todo-card-input");
+        const okBtn = document.createElement("button");
+        okBtn.classList.add("todo-card-ok-btn");
+        okBtn.innerText = "OK";
+
+        editDiv.append(input);
+        editDiv.append(okBtn);
+
+        return {wrapper, txtDiv, editBtn, editDiv, input, okBtn};
 
     }
 
-    toggleRenameTitleMode() {
-        if(this.titleContainer.hasAttribute("rename")) {
-            if(this.titleTextInput.value) {
-                this.todo.title = this.titleTextInput.value;
+    #toggleEditTitleMode() {
+        if(this.titleField.wrapper.hasAttribute("edit")) {
+            if(this.titleField.input.value) {
+                this.todo.title = this.titleField.input.value;
                 this.todoStorage.updateTodo(this.todo);
             }
-            this.titleContainer.removeAttribute("rename");
-            this.titleContainer.innerHTML = this.todo.title;
+            this.titleField.wrapper.removeAttribute("edit");
+            this.titleField.txtDiv.innerHTML = this.todo.title;
+            this.titleField.wrapper.append(this.titleField.txtDiv);
+            this.titleField.wrapper.append(this.titleField.editBtn);
         }
         else
-            this.enterRenameTitleMode();
+            this.#enterEditTitleMode();
     }
 
-    enterRenameTitleMode() {
-        if(!this.titleContainer.hasAttribute("rename")) {
-            this.titleContainer.setAttribute("rename", "");
-            this.titleContainer.innerHTML = "";
-            this.titleContainer.append(this.titleTextInputDiv);
-            this.titleTextInput.value = this.todo.title;
+    #enterEditTitleMode() {
+        if(!this.titleField.wrapper.hasAttribute("edit")) {
+            this.titleField.wrapper.setAttribute("edit", "");
+            this.titleField.wrapper.innerHTML = "";
+            this.titleField.wrapper.append(this.titleField.editDiv);
+            this.titleField.input.value = this.todo.title;
+        }
+    }
+
+    #toggleEditDueDateMode() {
+        if(this.dueDateField.wrapper.hasAttribute("edit")) {
+            if(this.dueDateField.input.value) {
+                const auxArr = this.dueDateField.input.value.split("-");
+                this.todo.dueDate = new Date(auxArr[0], auxArr[1] - 1, auxArr[2]);
+                this.todoStorage.updateTodo(this.todo);
+            }
+            this.dueDateField.wrapper.removeAttribute("edit");
+            this.dueDateField.txtDiv.innerHTML = this.todo.dueDate;
+        }
+        else
+            this.#enterEditDueDateMode();
+    }
+
+    #enterEditDueDateMode() {
+        if(!this.dueDateField.wrapper.hasAttribute("edit")) {
+            this.dueDateField.wrapper.setAttribute("edit", "");
+            this.dueDateField.wrapper.innerHTML = "";
+            this.dueDateField.wrapper.append(this.dueDateField.editDiv);
+            this.dueDateField.input.value = format(this.todo.dueDate, "yyyy-MM-dd");
+        }
+    }
+
+    #toggleEditTxtMode() {
+        if(this.txtField.wrapper.hasAttribute("edit")) {
+
+            this.todo.text = this.txtField.input.value;
+            this.todoStorage.updateTodo(this.todo);
+
+            this.txtField.wrapper.removeAttribute("edit");
+            this.txtField.txtDiv.innerHTML = this.todo.text;
+
+        }
+        else
+            this.#enterEditTxtMode();
+    }
+
+    #enterEditTxtMode() {
+        if(!this.txtField.wrapper.hasAttribute("edit")) {
+            this.txtField.wrapper.setAttribute("edit", "");
+            this.txtField.wrapper.innerHTML = "";
+            this.txtField.wrapper.append(this.txtField.editDiv);
+            this.txtField.input.value = this.todo.text;
         }
     }
 
