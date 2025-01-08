@@ -5,8 +5,8 @@ export default class {
     constructor(todo, deleteTodoFunction, todoStorage) {
     
         this.todo = todo;
-    
         this.todoStorage = todoStorage;
+        this.deleted = false;
 
         this.parentDiv = document.createElement("div");
         this.parentDiv.classList.add("todo-card-parent-div");
@@ -70,7 +70,10 @@ export default class {
 
         const options = [
             {name: "Rename", onclickFunction: () => {this.enterRenameTitleMode()}},
-            {name: "Delete", onclickFunction: deleteTodoFunction}
+            {name: "Delete", onclickFunction: () => {
+                this.deleted = true;
+                deleteTodoFunction();
+            }}
         ];
 
         for(const option of options) {
@@ -146,6 +149,7 @@ export default class {
             }
             this.titleField.wrapper.removeAttribute("edit");
             this.titleField.txtDiv.innerHTML = this.todo.title;
+            this.titleField.wrapper.innerHTML = "";
             this.titleField.wrapper.append(this.titleField.txtDiv);
             this.titleField.wrapper.append(this.titleField.editBtn);
         }
@@ -170,7 +174,10 @@ export default class {
                 this.todoStorage.updateTodo(this.todo);
             }
             this.dueDateField.wrapper.removeAttribute("edit");
-            this.dueDateField.txtDiv.innerHTML = this.todo.dueDate;
+            this.dueDateField.txtDiv.innerHTML = `Due date: ${format(this.todo.dueDate, "dd/MM/yyyy")}`;
+            this.dueDateField.wrapper.innerHTML = "";
+            this.dueDateField.wrapper.append(this.dueDateField.txtDiv);
+            this.dueDateField.wrapper.append(this.dueDateField.editBtn);
         }
         else
             this.#enterEditDueDateMode();
@@ -193,6 +200,9 @@ export default class {
 
             this.txtField.wrapper.removeAttribute("edit");
             this.txtField.txtDiv.innerHTML = this.todo.text;
+            this.txtField.wrapper.innerHTML = "";
+            this.txtField.wrapper.append(this.txtField.txtDiv);
+            this.txtField.wrapper.append(this.txtField.editBtn);
 
         }
         else
@@ -206,6 +216,10 @@ export default class {
             this.txtField.wrapper.append(this.txtField.editDiv);
             this.txtField.input.value = this.todo.text;
         }
+    }
+
+    isDeleted() {
+        return this.deleted;
     }
 
 }
