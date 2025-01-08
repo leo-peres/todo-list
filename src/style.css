@@ -79,6 +79,28 @@ button:focus {
     gap: 6px;
 }
 
+#menu-pages {
+    margin-bottom: 64px;
+}
+
+#menu-projects-nav-btn {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+#menu-projects-nav-btn nav {
+    margin: auto 0;
+}
+
+#menu-projects-nav-btn button {
+    background: none;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0px 6px;
+    border: 0;
+    margin-right: 24px;
+}
+
 /*********************/
 /***** TODO CARD *****/
 /*********************/

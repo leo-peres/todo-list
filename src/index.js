@@ -1,12 +1,12 @@
 import "./style.css";
 import _home from "./home.js";
 import _menu from "./menu.js";
-import _todoStorage from "./todo_storage.js";
+import storage from "./storage.js";
 
-const todoStorage = _todoStorage();
+const todoStorage = storage("todos");
+const projectStorage = storage("projects");
 
-//const menu = _menu(todoStorage);
-_menu(todoStorage);
+_menu(todoStorage, projectStorage);
 const home = _home(todoStorage);
 
 const pages = [home];

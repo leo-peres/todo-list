@@ -34,6 +34,7 @@ export default (todoStorage) => {
                 todoCards.push(newTodoCard);
             }
         }
+        
     }
 
     update();
