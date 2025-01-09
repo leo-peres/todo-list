@@ -37,7 +37,7 @@ export default (todoStorage) => {
         
     }
 
-    update();
+    //update();
 
     return {
 

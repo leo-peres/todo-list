@@ -29,12 +29,12 @@ body {
     background-color: var(--menu-bg-color);
 }
 
-.content-container {
+.content-main-div {
     background-color: var(--white);
     padding: 0px 52px;
 }
 
-.content-container h1 {
+.content-main-div h1 {
     color: var(--main-txt-color);
     text-align: center;
     font-size: 2.5em;
@@ -52,6 +52,15 @@ button:focus {
 .dots-btn {
     background: url(./images/dots-vertical.svg);
     background-repeat: no-repeat;
+}
+
+.del-btn {
+    background: url(./images/delete.svg);
+    background-repeat: no-repeat;
+    padding: 0;
+    border: 0;
+    height: 20px;
+    width: 20px;
 }
 
 /****************/
@@ -289,4 +298,33 @@ button:focus {
 .todo-card-txt .todo-card-ok-btn {
     grid-row: 2;
     grid-column: 2;
+}
+
+/*************************/
+/***** PROJECTS PAGE *****/
+/*************************/
+
+.projects-list {
+    padding: 0;
+    border-top: 1px solid var(--border-color);
+    list-style: none;
+
+    --border-color: #e0e0e0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.projects-list > li {
+    background-color: #fefefe;
+    padding: 20px 12px;
+    border-bottom: 1px solid var(--border-color);
+
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+.projects-list > li > nav {
+    font-size: 1.3rem;
+    font-weight: bold;
 }
