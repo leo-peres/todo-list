@@ -20,18 +20,32 @@ export default (projectStorage) => {
         contentDiv.innerHTML = "";
         contentDiv.append(mainDiv);
 
+        update();
+
+    }
+
+    const update = () => {
+
+        projectsList.innerHTML = "";
+
         const projects = projectStorage.load();
         for(const project of projects) {
             const li = document.createElement("li");
             li.innerHTML = `<nav>${project.name}</nav>`;
             const delBtn = document.createElement("button");
             delBtn.classList.add("del-btn");
+            delBtn.addEventListener("click", () => {projectStorage.remove(project)});
             li.append(delBtn);
             projectsList.append(li);
         }
 
     }
 
-    return {load}
+    return {
+
+        load,
+        update
+    
+    };
 
 }

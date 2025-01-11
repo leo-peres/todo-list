@@ -328,3 +328,47 @@ button:focus {
     font-size: 1.3rem;
     font-weight: bold;
 }
+
+/*************************/
+/***** PROJECTS PAGE *****/
+/*************************/
+
+#project-creation-form {
+    display:flex;
+    flex-direction: column;
+}
+
+#project-creation-form > * {
+    margin-top: 20px;
+}
+
+.form-entry-div {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.form-entry-div label {
+    font-weight: bold;
+    margin: auto 0px;
+}
+
+.form-entry-div input {
+    font-size: 1rem;
+    border: 1px solid #080808;
+    padding-left: 1ch;
+    border-radius: 10px;
+    height: 1.8rem;
+}
+
+.form-entry-div input:focus {
+    outline: 0;
+    border: 2px solid #3b82f6;
+}
+
+.form-entry-div input[invalid] {
+    border: 2px solid #ef4444;
+}
+
+#project-creation-form button {
+    align-self: center;
+}

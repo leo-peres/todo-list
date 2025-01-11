@@ -11,7 +11,8 @@ export default (todoStorage, projectStorage) => {
 
     const projectsUl = document.getElementById("menu-projects-list");
 
-    const updateProjectsList = () => {
+    const update = () => {
+
         projectsUl.innerHTML = "";
         const projects = projectStorage.load();
         for(const project of projects) {
@@ -21,15 +22,23 @@ export default (todoStorage, projectStorage) => {
             li.append(nav);
             projectsUl.append(li);
         }
+
     }
 
+    /*
     const addProjectBtn = document.querySelector("#menu-projects-nav-btn button");
     addProjectBtn.addEventListener("click", () => {
         const newProject = new Project("project");
         projectStorage.add(newProject);
-        updateProjectsList();
     })
+    */
 
-    updateProjectsList();
+    update();
+
+    return {
+
+        update
+
+    }
 
 }
