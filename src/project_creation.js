@@ -1,6 +1,6 @@
 import Project from "./project.js";
 
-export default (projectStorage) => {
+export default (pageController) => {
 
     const contentDiv = document.getElementById("content");
 
@@ -31,8 +31,10 @@ export default (projectStorage) => {
 
         let name = nameInput.value;
         if(name) {
+            nameInput.value = "";
             const newProject = new Project(name);
-            projectStorage.add(newProject);
+            pageController.addProject(newProject);
+            pageController.loadProjectPage(newProject);
         }
 
     })

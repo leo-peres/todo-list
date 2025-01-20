@@ -1,4 +1,4 @@
-export default (projectStorage) => {
+export default (pageController) => {
 
     const contentDiv = document.getElementById("content");
 
@@ -28,15 +28,26 @@ export default (projectStorage) => {
 
         projectsList.innerHTML = "";
 
-        const projects = projectStorage.load();
+        const projects = pageController.loadProjects();
         for(const project of projects) {
+            
             const li = document.createElement("li");
-            li.innerHTML = `<nav>${project.name}</nav>`;
+            
+            const nav = document.createElement("nav");
+            nav.innerText = project.name;
+
+            nav.addEventListener("click", () => {pageController.loadProjectPage(project)});
+
             const delBtn = document.createElement("button");
             delBtn.classList.add("del-btn");
-            delBtn.addEventListener("click", () => {projectStorage.remove(project)});
+
+            delBtn.addEventListener("click", () => {pageController.removeProject(project)});
+            
+            li.append(nav);    
             li.append(delBtn);
+            
             projectsList.append(li);
+            
         }
 
     }

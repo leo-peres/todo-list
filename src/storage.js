@@ -22,8 +22,8 @@ export default (name) => {
             page.update();
     }
 
-    const load = () => {
-        return data;
+    const load = (pred = () => true) => {
+        return data.filter((x) => pred(x));
     }
 
     const addPage = (newPage) => {
