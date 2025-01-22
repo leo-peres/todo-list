@@ -360,7 +360,8 @@ button:focus {
     height: 1.8rem;
 }
 
-.form-entry-div input:focus {
+.form-entry-div input:focus,
+.form-entry-div textarea:focus {
     outline: 0;
     border: 2px solid #3b82f6;
 }
@@ -371,4 +372,16 @@ button:focus {
 
 #project-creation-form button {
     align-self: center;
+}
+
+/*************************/
+/***** TASK CREATION *****/
+/*************************/
+
+.task-creation-form {
+    padding: 32px 0px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }

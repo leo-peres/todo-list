@@ -9,7 +9,20 @@ export default (pageController) => {
     const header = document.createElement("h1");
     header.innerText = ""
 
+    const addBtn = document.createElement("button");
+    addBtn.innerText = "Add task";
+
+    addBtn.addEventListener("click", () => {
+        const createTaskPage = pageController.getCreateTaskPage(project);
+        createTaskPage.load();
+    });
+
+    const cardsDiv = document.createElement("div");
+    cardsDiv.classList.add("cards-div");
+
     mainDiv.append(header);
+    mainDiv.append(addBtn);
+    mainDiv.append(cardsDiv);
 
     let project = null;
 
@@ -29,7 +42,7 @@ export default (pageController) => {
         const cards = pageController.loadTodos((x) => x.project === project);
 
         for(const card of cards) {
-            mainDiv.append(card.parentDiv);
+            cardsDiv.append(card.parentDiv);
         }
 
     }

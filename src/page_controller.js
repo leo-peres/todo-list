@@ -1,9 +1,18 @@
 import storage from "./storage.js";
+import taskCreation from "./task_creation.js";
 
 export default (projectPage) => {
 
     const todoStorage = storage("todos");
     const projectStorage = storage("projects")
+
+    const createTaskPages = [];
+
+    const projects = projectStorage.load();
+    for(const project of projects) {
+        const createTaskPage = taskCreation(this, project);
+        createTaskPages.push(createTaskPage);
+    }
 
     const addTodo = (newTodo) => {
         todoStorage.add(newTodo);
@@ -47,6 +56,12 @@ export default (projectPage) => {
         projectPage.load();
     }
 
+    const getCreateTaskPage = (project) => {
+        let index = createTaskPages.findIndex(x => x.project === project);
+        if(index > -1)
+            return createTaskPages[index];
+    }
+
     return {
 
         addTodo,
@@ -58,7 +73,8 @@ export default (projectPage) => {
         addListener,
         setProjectPage,
         setActiveProject,
-        loadProjectPage
+        loadProjectPage,
+        getCreateTaskPage
 
     };
 

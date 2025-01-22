@@ -37,7 +37,7 @@ export default (pageController) => {
             pageController.loadProjectPage(newProject);
         }
 
-    })
+    });
 
     form.append(nameDiv);
     form.append(submitBtn);
