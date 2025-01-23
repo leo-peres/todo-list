@@ -1,3 +1,5 @@
+import Todo from "./todo.js";
+
 export default (pageController, project) => {
 
     const contentDiv = document.getElementById("content");
@@ -63,7 +65,27 @@ export default (pageController, project) => {
     submitBtn.innerText = "OK";
 
     submitBtn.addEventListener("click", (evt) => {
+        
         evt.preventDefault();
+    
+        let title = titleInput.value;
+        let dueDate = dueDateInput.value;
+        let text = textInput.value;
+
+        if(title && dueDate && text) {
+            
+            const auxArr = dueDate.split("-");
+            const date = new Date(auxArr[0], auxArr[1] - 1, auxArr[2]);
+
+            let id = pageController.getTodoId();
+
+            const newTodo = new Todo(id, title, dueDate, text, 1, project);
+            pageController.addTodo(newTodo);
+
+            pageController.loadProjectPage(project);
+
+        }
+
     });
 
     //////////////

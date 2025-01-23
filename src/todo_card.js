@@ -15,9 +15,6 @@ export default class {
 
         this.titleField = this.#createCardField("todo-card-title", this.todo.title, () => {this.#toggleEditTitleMode();});
 
-        //this.titleField.editDiv.classList.add("todo-card-title-txt-input-div");
-        //this.titleField.input.classList.add("todo-card-title-txt-input");
-
         this.titleField.input.addEventListener("input", () => {
             if(this.titleField.input.value.length > 25)
                 this.titleField.input.value = this.titleField.input.value.slice(0, -1);
@@ -34,8 +31,6 @@ export default class {
 
         this.dueDateField = this.#createCardField("todo-card-due-date", `Due date: ${format(todo.dueDate, "dd/MM/yyyy")}`, () => {this.#enterEditDueDateMode();});
 
-        //this.dueDateField.editDiv.classList.add("todo-card-due-date-edit-div");
-
         this.dueDateField.input.setAttribute("type", "date");
 
         this.dueDateField.okBtn.addEventListener("click", () => {this.#toggleEditDueDateMode()});
@@ -48,8 +43,6 @@ export default class {
         //////////////////
 
         this.txtField = this.#createCardField("todo-card-txt", this.todo.text, () => {this.#toggleEditTxtMode()}, true);
-
-        //this.txtField.input.classList.add("todo-card-txt-input");
 
         this.txtField.okBtn.addEventListener("click", () => {this.#toggleEditTxtMode();});
 

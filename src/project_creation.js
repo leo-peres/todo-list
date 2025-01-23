@@ -32,7 +32,7 @@ export default (pageController) => {
         let name = nameInput.value;
         if(name) {
             nameInput.value = "";
-            const newProject = new Project(name);
+            const newProject = new Project(pageController.getProjectId(), name);
             pageController.addProject(newProject);
             pageController.loadProjectPage(newProject);
         }

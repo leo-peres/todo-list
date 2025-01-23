@@ -1,3 +1,5 @@
+import TodoCard from "./todo_card.js";
+
 export default (pageController) => {
 
     const contentDiv = document.getElementById("content");
@@ -39,9 +41,11 @@ export default (pageController) => {
 
         header.innerText = project.name;
 
-        const cards = pageController.loadTodos((x) => x.project === project);
+        const todos = pageController.loadTodos((x) => x.project.id === project.id);
 
-        for(const card of cards) {
+        cardsDiv.innerHTML = "";
+        for(const todo of todos) {
+            const card = new TodoCard(todo)
             cardsDiv.append(card.parentDiv);
         }
 
