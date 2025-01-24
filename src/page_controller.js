@@ -1,16 +1,22 @@
 import storage from "./storage.js";
 import taskCreation from "./task_creation.js";
 
-const ider = (data) => {
+const ider = (dataStorage) => {
 
     const getNewId = () => {
 
+        const data = dataStorage.load();
+        data.sort((x, y) => x.id - y.id);
+
         let newId = 1;
         if(data.length > 0) {
-            while(newId == data[newId-1].id) {
+            while(newId <= data.length && newId == data[newId-1].id) {
                 newId++;
             }
         }
+
+        console.log(newId);
+        console.log(data.length);
 
         return newId
 
@@ -29,8 +35,8 @@ const factory = (projectPage) => {
     const todoStorage = storage("todos");
     const projectStorage = storage("projects")
 
-    const todoIder = ider(todoStorage.load());
-    const projectIder = ider(projectStorage.load());
+    const todoIder = ider(todoStorage);
+    const projectIder = ider(projectStorage);
 
     let _this = null;
 
@@ -59,6 +65,8 @@ const factory = (projectPage) => {
 
     const removeProject = (oldProject) => {
         projectStorage.remove(oldProject);
+        for(const todo of todoStorage.load().filter(x => x.project.id == oldProject.id))
+            removeTodo(todo);
         updateProjects(this);
     }
 
@@ -103,13 +111,9 @@ const factory = (projectPage) => {
             return createTaskPages[index];
     }
 
-    let selfReferenceSet = false;
     const setSelfReference = (selfReference) => {
-        if(!selfReferenceSet) {
-            _this = selfReference;
-            selfReferenceSet = true;
-        }
-    } 
+        _this = selfReference;
+    }
 
     return {
 
@@ -138,6 +142,8 @@ export default (projectPage) => {
     const pageController = factory(projectPage);
 
     pageController.setSelfReference(pageController);
+    delete pageController.setSelfReference;
+
     pageController.updateProjects();
 
     return pageController;
