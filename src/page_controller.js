@@ -1,3 +1,4 @@
+import projectPage from "./projects_page.js";
 import storage from "./storage.js";
 import taskCreation from "./task_creation.js";
 
@@ -9,14 +10,8 @@ const ider = (dataStorage) => {
         data.sort((x, y) => x.id - y.id);
 
         let newId = 1;
-        if(data.length > 0) {
-            while(newId <= data.length && newId == data[newId-1].id) {
-                newId++;
-            }
-        }
-
-        console.log(newId);
-        console.log(data.length);
+        while(newId <= data.length && newId == data[newId-1].id)
+            newId++;
 
         return newId
 
@@ -33,7 +28,7 @@ const ider = (dataStorage) => {
 const factory = (projectPage) => {
 
     const todoStorage = storage("todos");
-    const projectStorage = storage("projects")
+    const projectStorage = storage("projects");
 
     const todoIder = ider(todoStorage);
     const projectIder = ider(projectStorage);
@@ -106,7 +101,7 @@ const factory = (projectPage) => {
     }
 
     const getCreateTaskPage = (project) => {
-        let index = createTaskPages.findIndex(x => x.project.id === project.id);
+        let index = createTaskPages.findIndex(x => x.project.id == project.id);
         if(index > -1)
             return createTaskPages[index];
     }

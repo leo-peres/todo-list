@@ -329,9 +329,9 @@ button:focus {
     font-weight: bold;
 }
 
-/*************************/
-/***** PROJECTS PAGE *****/
-/*************************/
+/*********************************/
+/***** PROJECT CREATION PAGE *****/
+/*********************************/
 
 #project-creation-form {
     display:flex;
@@ -372,6 +372,21 @@ button:focus {
 
 #project-creation-form button {
     align-self: center;
+}
+
+/************************/
+/***** PROJECT PAGE *****/
+/************************/
+
+.cards-div {
+    padding: 48px 0px 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cards-div > * {
+    margin-bottom: 32px;
 }
 
 /*************************/

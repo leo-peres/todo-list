@@ -9,9 +9,6 @@ export default (pageController) => {
     mainDiv.id = "home-main-div";
     mainDiv.classList.add("content-main-div");
 
-    const todos = [];
-    const todoCards = [];
-
     const load = () => {
 
         contentDiv.innerHTML = "";

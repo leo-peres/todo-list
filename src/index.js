@@ -22,8 +22,6 @@ pageController.addListener(projects);
 const projectPage = _projectPage(pageController);
 pageController.setProjectPage(projectPage);
 
-const pages = [menu, home, projects];
-
 const homeNav = document.getElementById("menu-home-nav");
 homeNav.addEventListener("click", () => {home.load();});
 

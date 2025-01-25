@@ -45,7 +45,10 @@ export default (pageController) => {
 
         cardsDiv.innerHTML = "";
         for(const todo of todos) {
-            const card = new TodoCard(todo)
+            const card = new TodoCard(todo, () => {
+                pageController.removeTodo(todo);
+                update();
+            });
             cardsDiv.append(card.parentDiv);
         }
 

@@ -2,10 +2,9 @@ import {format} from "date-fns";
 
 export default class {
     
-    constructor(todo, deleteTodoFunction, todoStorage) {
+    constructor(todo, deleteTodoFunction) {
     
         this.todo = todo;
-        this.todoStorage = todoStorage;
         this.deleted = false;
 
         this.parentDiv = document.createElement("div");
