@@ -2,10 +2,12 @@ import {format} from "date-fns";
 
 export default class {
     
-    constructor(todo, deleteTodoFunction) {
+    constructor(todo, deleteTodoFunction, pageController) {
     
         this.todo = todo;
         this.deleted = false;
+
+        this.pageController = pageController;
 
         this.parentDiv = document.createElement("div");
         this.parentDiv.classList.add("todo-card-parent-div");
@@ -137,7 +139,7 @@ export default class {
         if(this.titleField.wrapper.hasAttribute("edit")) {
             if(this.titleField.input.value) {
                 this.todo.title = this.titleField.input.value;
-                this.todoStorage.save();
+                this.pageController.saveTodos();
             }
             this.titleField.wrapper.removeAttribute("edit");
             this.titleField.txtDiv.innerHTML = this.todo.title;
@@ -163,7 +165,7 @@ export default class {
             if(this.dueDateField.input.value) {
                 const auxArr = this.dueDateField.input.value.split("-");
                 this.todo.dueDate = new Date(auxArr[0], auxArr[1] - 1, auxArr[2]);
-                this.todoStorage.save();
+                this.pageController.saveTodos();
             }
             this.dueDateField.wrapper.removeAttribute("edit");
             this.dueDateField.txtDiv.innerHTML = `Due date: ${format(this.todo.dueDate, "dd/MM/yyyy")}`;
@@ -188,7 +190,7 @@ export default class {
         if(this.txtField.wrapper.hasAttribute("edit")) {
 
             this.todo.text = this.txtField.input.value;
-            this.todoStorage.save();
+            this.pageController.saveTodos();
 
             this.txtField.wrapper.removeAttribute("edit");
             this.txtField.txtDiv.innerHTML = this.todo.text;

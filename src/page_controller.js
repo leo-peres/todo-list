@@ -45,6 +45,10 @@ const factory = (projectPage) => {
         todoStorage.remove(oldTodo);
     }
 
+    const saveTodos = () => {
+        todoStorage.save();
+    }
+
     const loadTodos = (pred = () => true) => {
         return todoStorage.load(pred);
     }
@@ -63,6 +67,10 @@ const factory = (projectPage) => {
         for(const todo of todoStorage.load().filter(x => x.project.id == oldProject.id))
             removeTodo(todo);
         updateProjects(this);
+    }
+
+    const saveProjects = () => {
+        projectStorage.save();
     }
 
     const loadProjects = () => {
@@ -114,10 +122,12 @@ const factory = (projectPage) => {
 
         addTodo,
         removeTodo,
+        saveTodos,
         loadTodos,
         getTodoId,
         addProject,
         removeProject,
+        saveProjects,
         loadProjects,
         updateProjects,
         getProjectId,

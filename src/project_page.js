@@ -48,7 +48,7 @@ export default (pageController) => {
             const card = new TodoCard(todo, () => {
                 pageController.removeTodo(todo);
                 update();
-            });
+            }, pageController);
             cardsDiv.append(card.parentDiv);
         }
 
