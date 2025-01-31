@@ -5,6 +5,7 @@ import _pageController from "./page_controller.js";
 import _projectCreation from "./project_creation.js";
 import _projectPage from "./project_page.js";
 import _projects from "./projects_page.js";
+import _taskPage from "./task_page.js";
 
 const pageController = _pageController();
 
@@ -21,6 +22,9 @@ pageController.addListener(projects);
 
 const projectPage = _projectPage(pageController);
 pageController.setProjectPage(projectPage);
+
+const taskPage = _taskPage(pageController);
+pageController.setTaskPage(taskPage);
 
 const homeNav = document.getElementById("menu-home-nav");
 homeNav.addEventListener("click", () => {home.load();});

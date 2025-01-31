@@ -25,7 +25,7 @@ const ider = (dataStorage) => {
 
 }
 
-const factory = (projectPage) => {
+const factory = (projectPage, taskPage) => {
 
     const todoStorage = storage("todos");
     const projectStorage = storage("projects");
@@ -108,6 +108,19 @@ const factory = (projectPage) => {
         projectPage.load();
     }
 
+    const setTaskPage = (_taskPage) => {
+        taskPage = _taskPage;
+    }
+
+    const setActiveTask = (todo) => {
+        taskPage.setTask(todo);
+    }
+
+    const loadTaskPage = (todo) => {
+        setActiveTask(todo);
+        taskPage.load();
+    }
+
     const getCreateTaskPage = (project) => {
         let index = createTaskPages.findIndex(x => x.project.id == project.id);
         if(index > -1)
@@ -135,6 +148,9 @@ const factory = (projectPage) => {
         setProjectPage,
         setActiveProject,
         loadProjectPage,
+        setTaskPage,
+        setActiveTask,
+        loadTaskPage,
         getCreateTaskPage,
         setSelfReference
 

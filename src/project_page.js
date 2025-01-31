@@ -21,6 +21,7 @@ const todoListView = (todo) => {
 
     return {
 
+        todo,
         parentDiv
 
     };
@@ -115,8 +116,12 @@ export default (pageController) => {
                 tasksDiv.append(card.parentDiv);
             }
             else {
+
                 const listView = todoListView(todo);
                 tasksDiv.append(listView.parentDiv);
+
+                listView.parentDiv.addEventListener("click", () => {pageController.loadTaskPage(todo);});
+
             }
         }
 
