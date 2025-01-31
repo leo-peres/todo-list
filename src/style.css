@@ -63,6 +63,23 @@ button:focus {
     width: 20px;
 }
 
+.toggle-view-mode-btn {
+    padding: 0;
+    border: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.toggle-view-mode-btn[card] {
+    background: url(./images/card-view.svg);
+    background-repeat: no-repeat;
+}
+
+.toggle-view-mode-btn[list] {
+    background: url(./images/list-view.svg);
+    background-repeat: no-repeat;
+}
+
 /****************/
 /***** MENU *****/
 /****************/
@@ -378,15 +395,31 @@ button:focus {
 /***** PROJECT PAGE *****/
 /************************/
 
-.cards-div {
-    padding: 48px 0px 16px;
+.project-page-btn-div {
+    display: grid;
+    grid-template-columns: max-content 1fr 36px;
+}
 
+.project-page-btn-div > .toggle-view-mode-btn {
+    grid-column: -1;
+}
+
+.tasks-div {
+    padding: 48px 0px 16px;
+}
+
+.tasks-div[card] {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.cards-div > * {
+.tasks-div[card] > * {
     margin-bottom: 32px;
+}
+
+.tasks-div[list] {
+    display: grid;
+    grid-auto-flow: row;
 }
 
 /*************************/

@@ -1,4 +1,28 @@
+import {format} from "date-fns";
+
 import TodoCard from "./todo_card.js";
+
+
+const todoListView = (todo) => {
+
+    const parentDiv = document.createElement("div");
+
+    const titleDiv = document.createElement("div");
+    titleDiv.innerText = todo.title;
+
+    const dueDateDiv = document.createElement("div");
+    dueDateDiv.innerText = format(todo.dueDate, "dd/MM/yyyy");
+
+    parentDiv.append(titleDiv);
+    parentDiv.append(dueDateDiv);
+
+    return {
+
+        parentDiv
+
+    };
+
+}
 
 export default (pageController) => {
 
@@ -11,6 +35,9 @@ export default (pageController) => {
     const header = document.createElement("h1");
     header.innerText = ""
 
+    const btnDiv = document.createElement("div");
+    btnDiv.classList.add("project-page-btn-div");
+
     const addBtn = document.createElement("button");
     addBtn.innerText = "Add task";
 
@@ -19,14 +46,46 @@ export default (pageController) => {
         createTaskPage.load();
     });
 
-    const cardsDiv = document.createElement("div");
-    cardsDiv.classList.add("cards-div");
+    const toggleModeBtn = document.createElement("button");
+    toggleModeBtn.classList.add("toggle-view-mode-btn");
+    //toggleModeBtn.setAttribute("card", "");
+
+    toggleModeBtn.addEventListener("click", () => {
+
+        cardView = !cardView;
+        const auxArray = ["card", "list"];
+
+        tasksDiv.removeAttribute(auxArray[0+cardView]);
+        tasksDiv.setAttribute(auxArray[1-cardView], "");
+
+        toggleModeBtn.removeAttribute(auxArray[0+cardView]);
+        toggleModeBtn.setAttribute(auxArray[1-cardView], "");
+
+        update();
+
+    })
+
+    btnDiv.append(addBtn);
+    btnDiv.append(toggleModeBtn);
+
+    const tasksDiv = document.createElement("div");
+    tasksDiv.classList.add("tasks-div");
 
     mainDiv.append(header);
-    mainDiv.append(addBtn);
-    mainDiv.append(cardsDiv);
+    mainDiv.append(btnDiv);
+    mainDiv.append(tasksDiv);
 
     let project = null;
+
+    let cardView = false;
+    if(cardView) {
+        tasksDiv.setAttribute("card", "")
+        toggleModeBtn.setAttribute("card", "");
+    }
+    else {
+        tasksDiv.setAttribute("list", "");
+        toggleModeBtn.setAttribute("list", "");
+    }
 
     const load = () => {
 
@@ -43,13 +102,19 @@ export default (pageController) => {
 
         const todos = pageController.loadTodos((x) => x.project.id === project.id);
 
-        cardsDiv.innerHTML = "";
+        tasksDiv.innerHTML = "";
         for(const todo of todos) {
-            const card = new TodoCard(todo, () => {
-                pageController.removeTodo(todo);
-                update();
-            }, pageController);
-            cardsDiv.append(card.parentDiv);
+            if(cardView) {
+                const card = new TodoCard(todo, () => {
+                    pageController.removeTodo(todo);
+                    update();
+                }, pageController);
+                tasksDiv.append(card.parentDiv);
+            }
+            else {
+                const listView = todoListView(todo);
+                tasksDiv.append(listView.parentDiv);
+            }
         }
 
     }
