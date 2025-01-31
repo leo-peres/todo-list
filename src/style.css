@@ -317,6 +317,19 @@ button:focus {
     grid-column: 2;
 }
 
+/*********************/
+/***** LIST VIEW *****/
+/*********************/
+
+.todo-list-view {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.todo-list-view > div:first-child {
+    margin-bottom: 6px;
+}
+
 /*************************/
 /***** PROJECTS PAGE *****/
 /*************************/

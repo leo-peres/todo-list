@@ -6,11 +6,14 @@ import TodoCard from "./todo_card.js";
 const todoListView = (todo) => {
 
     const parentDiv = document.createElement("div");
+    parentDiv.classList.add("todo-list-view");
 
     const titleDiv = document.createElement("div");
+    titleDiv.classList.add("todo-list-view-title");
     titleDiv.innerText = todo.title;
 
     const dueDateDiv = document.createElement("div");
+    dueDateDiv.classList.add("todo-list-view-due-date");
     dueDateDiv.innerText = format(todo.dueDate, "dd/MM/yyyy");
 
     parentDiv.append(titleDiv);
